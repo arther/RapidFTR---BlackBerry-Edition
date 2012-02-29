@@ -1,11 +1,12 @@
 package com.rapidftr.screens;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.microedition.io.Connector;
-
+ 
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.EncodedImage;
 import net.rim.device.api.ui.Color;
@@ -57,9 +58,9 @@ public class ViewChildScreen extends CustomScreen {
 		this.forms = forms;
 	}
 
-    protected void onExposed() {
-        setUp();
-    }
+	protected void onExposed() {
+		setUp();
+	}
 
 	public void setUp() {
 		clearFields();
@@ -98,8 +99,8 @@ public class ViewChildScreen extends CustomScreen {
 		final HorizontalFieldManager horizontalFieldManager = new HorizontalFieldManager(
 				Manager.HORIZONTAL_SCROLLBAR | Manager.USE_ALL_WIDTH);
 
-		renderBitmap(horizontalFieldManager, child
-				.getField("current_photo_key"));
+		renderBitmap(horizontalFieldManager,
+				child.getField("current_photo_key"));
 
 		String uniqueIdentifier = child.getField("unique_identifier");
 		uniqueIdentifier = (null == uniqueIdentifier) ? "" : uniqueIdentifier;
@@ -114,18 +115,20 @@ public class ViewChildScreen extends CustomScreen {
 		emptyLineAfterUID.select(false);
 		add(emptyLineAfterUID);
 
-        if ("true".equals(child.getField(Child.FLAGGED_KEY))) {
-            verticalFieldManager.add(getFlaggedByControl());
-        }
-        horizontalFieldManager.add(verticalFieldManager);
-        add(horizontalFieldManager);
+		if ("true".equals(child.getField(Child.FLAGGED_KEY))) {
+			verticalFieldManager.add(getFlaggedByControl());
+		}
+		horizontalFieldManager.add(verticalFieldManager);
+		add(horizontalFieldManager);
 	}
 
-    private Field getFlaggedByControl() {
-        LabelField label = new LabelField("Record flagged as possibly suspect or duplicate by " + child.flaggedByUserName() + ": " + child.flagInformation());
-        return label;
-    }
-
+	private Field getFlaggedByControl() {
+		LabelField label = new LabelField(
+				"Record flagged as possibly suspect or duplicate by "
+						+ child.flaggedByUserName() + ": "
+						+ child.flagInformation());
+		return label;
+	}
 
 	private Field getRegisteredByControl() {
 		LabelField label = new LabelField("Registered by "
@@ -194,9 +197,9 @@ public class ViewChildScreen extends CustomScreen {
 
 	protected boolean trackwheelClick(int status, int time) {
 		if (isBitmapFieldFocused) {
-			((ViewChildController) controller).viewChildPhoto(child);
+			//((ViewChildController) controller).viewChildPhoto(child);
+			((ViewChildController) controller).viewChildPhotoGallery(child);
 			return false;
-
 		}
 		return true;
 	}
@@ -214,9 +217,9 @@ public class ViewChildScreen extends CustomScreen {
 			}
 		};
 
-		MenuItem photoMenu = new MenuItem("View Child Photo", 2, 1) {
+		MenuItem photoMenu = new MenuItem("View Child Photo Gallery", 2, 1) {
 			public void run() {
-				getViewChildController().viewChildPhoto(child);
+				((ViewChildController) controller).viewChildPhotoGallery(child);
 			}
 		};
 
@@ -232,25 +235,26 @@ public class ViewChildScreen extends CustomScreen {
 			}
 		};
 
-        MenuItem flagRecordAsSuspectMenu;
-        if ("true".equals(child.getField(Child.FLAGGED_KEY))) {
-            flagRecordAsSuspectMenu = new MenuItem("Flag Information", 2, 1) {
-                public void run() {
-                    Dialog.alert(child.flagInformation());
-                }
-            };
-        } else {
-            flagRecordAsSuspectMenu = new MenuItem("Flag Record As Suspect", 2, 1) {
-                public void run() {
-                    getViewChildController().flagRecord(child);
-                }
-            };
-        }
+		MenuItem flagRecordAsSuspectMenu;
+		if ("true".equals(child.getField(Child.FLAGGED_KEY))) {
+			flagRecordAsSuspectMenu = new MenuItem("Flag Information", 2, 1) {
+				public void run() {
+					Dialog.alert(child.flagInformation());
+				}
+			};
+		} else {
+			flagRecordAsSuspectMenu = new MenuItem("Flag Record As Suspect", 2,
+					1) {
+				public void run() {
+					getViewChildController().flagRecord(child);
+				}
+			};
+		}
 
 		menu.add(editChildMenu);
 		menu.add(photoMenu);
 		menu.add(syncChildMenu);
-        menu.add(flagRecordAsSuspectMenu);
+		menu.add(flagRecordAsSuspectMenu);
 
 		if (child.isSyncFailed()) {
 			MenuItem syncMenu = new MenuItem("Sync Errors", 2, 1) {

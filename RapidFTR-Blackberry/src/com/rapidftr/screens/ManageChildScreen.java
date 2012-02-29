@@ -59,8 +59,9 @@ public class ManageChildScreen extends CustomScreen {
 		screenManager.add(new SeparatorField());
 		add(screenManager);
 
-		final UIForms uiForms = new UIForms(forms, new FormFieldFactory(), childToEdit);
-		
+		final UIForms uiForms = new UIForms(forms, new FormFieldFactory(),
+				childToEdit);
+
 		final Manager formManager = new HorizontalFieldManager(FIELD_LEFT);
 		formManager.add(uiForms.getDefaultForm());
 
@@ -75,7 +76,8 @@ public class ManageChildScreen extends CustomScreen {
 		availableForms.setChangeListener(new FieldChangeListener() {
 			public void fieldChanged(Field field, int context) {
 				formManager.deleteAll();
-				formManager.add(uiForms.formAt(availableForms.getSelectedIndex()));
+				formManager.add(uiForms.formAt(availableForms
+						.getSelectedIndex()));
 			}
 		});
 
@@ -121,10 +123,11 @@ public class ManageChildScreen extends CustomScreen {
 
 	private String onSaveChildClicked() {
 		if (childToEdit == null) {
-			childToEdit = Child.create(forms, dateFormatter
-					.getCurrentFormattedDateTime());
+			childToEdit = Child.create(forms,
+					dateFormatter.getCurrentFormattedDateTime());
 		} else {
-			childToEdit.update(forms, dateFormatter.getCurrentFormattedDateTime());
+			childToEdit.update(forms,
+					dateFormatter.getCurrentFormattedDateTime());
 		}
 
 		String invalidDataField;

@@ -1,9 +1,13 @@
-#Tue Aug 24 11:22:09 CDT 2010
-org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+#Fri Feb 10 11:45:47 IST 2012
+org.eclipse.jdt.core.classpathVariable.JRE_SRCROOT=
+org.eclipse.jdt.core.compiler.compliance=1.6
+org.eclipse.jdt.core.classpathVariable.JRE_LIB=C\:/eclipse/plugins/net.rim.ejde.componentpack4.6.1_4.6.1.49/components/lib/net_rim_api.jar
 org.eclipse.jdt.core.compiler.codegen.targetPlatform=1.6
+org.eclipse.jdt.core.compiler.problem.enumIdentifier=error
+org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
 eclipse.preferences.version=1
 org.eclipse.jdt.core.compiler.codegen.inlineJsrBytecode=enabled
-org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
 org.eclipse.jdt.core.compiler.source=1.6
-org.eclipse.jdt.core.codeComplete.visibilityCheck=enabled
-org.eclipse.jdt.core.compiler.compliance=1.6
+org.eclipse.jdt.core.classpathVariable.JRE_SRC=
+org.eclipse.jdt.core.compiler.problem.assertIdentifier=error
+org.eclipse.jdt.core.timeoutForParameterNameFromAttachedJavadoc=50

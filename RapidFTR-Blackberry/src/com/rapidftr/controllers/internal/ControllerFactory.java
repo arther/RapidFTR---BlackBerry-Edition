@@ -108,4 +108,16 @@ public class ControllerFactory {
         FlagReasonScreen flagReasonScreen = new FlagReasonScreen();
         return new FlagChildController(flagReasonScreen, uiStack, dispatcher);
     }
+
+	public ViewChildPhotoGalleryController viewChildPhotoGallery(
+			Dispatcher dispatcher) {
+		ViewChildPhotoGalleryScreen viewChildPhotoGalleryScreen = new ViewChildPhotoGalleryScreen();
+		return new ViewChildPhotoGalleryController(viewChildPhotoGalleryScreen,uiStack,dispatcher);
+		
+	}
+	
+	public ViewSelectedPhotoController viewSelectedPhoto(Dispatcher dispatcher){
+		ViewSelectedPhotoScreen  viewSelectedPhotoScreen = new ViewSelectedPhotoScreen();
+		return new ViewSelectedPhotoController(viewSelectedPhotoScreen,uiStack,dispatcher);
+	}
 }

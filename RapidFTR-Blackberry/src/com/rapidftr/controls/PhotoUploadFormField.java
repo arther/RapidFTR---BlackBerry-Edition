@@ -1,5 +1,7 @@
 package com.rapidftr.controls;
 
+import java.util.Calendar;
+
 import net.rim.device.api.math.Fixed32;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.EncodedImage;
@@ -10,6 +12,8 @@ import net.rim.device.api.ui.component.LabelField;
 import com.rapidftr.form.FormField;
 import com.rapidftr.model.Child;
 import com.rapidftr.screens.ManageChildScreen;
+import com.rapidftr.utilities.DateFormatter;
+import com.rapidftr.utilities.DefaultBlackBerryDateFormat;
 import com.rapidftr.utilities.ImageCaptureListener;
 import com.rapidftr.utilities.ImageHelper;
 import com.rapidftr.utilities.ImageUtility;
@@ -36,15 +40,27 @@ public class PhotoUploadFormField extends CustomField implements
 
 	}
 
-	// TODO: re render the field in the manage screen onExposed instead of doing
-	// it this way
-	public void onImagedSaved(String imageLocation, EncodedImage encodedImage) {
-		this.imageLocation = "file://" + imageLocation;
+	public void onImagedSaved(String imagePath, EncodedImage encodedImage) {
+		this.imageLocation = "file://" + imagePath;
 		int requiredWidth = Fixed32.toFP(bitmap.getWidth());
 		int requiredHeight = Fixed32.toFP(bitmap.getHeight());
-		bitmap = ImageUtility.scaleImage(encodedImage, requiredWidth, requiredHeight);
+		bitmap = ImageUtility.scaleImage(encodedImage, requiredWidth,
+				requiredHeight);
 		capturePhoto.setBitmap(bitmap);
+//		Child curChild = getChildScreen().getChild();
 		setFieldValue(this.imageLocation);
+		// if (curChild != null) {
+		// // if (curChild.getField("current_photo_key") != null
+		// // || getChildScreen().getChild()
+		// // .getField("current_photo_key") != "") {
+		//
+		// // }
+		// getChildScreen().getChild().addImageToChild(
+		// imagePath,
+		// new DateFormatter(Calendar.getInstance().getTimeZone(),
+		// new DefaultBlackBerryDateFormat())
+		// .getCurrentFormattedDateTime());
+		// }
 	}
 
 	protected void onDisplay() {
@@ -74,9 +90,9 @@ public class PhotoUploadFormField extends CustomField implements
 	private ManageChildScreen getChildScreen() {
 		return (ManageChildScreen) getScreen();
 	}
-	
+
 	public void setValue(String value) {
-		imageLocation = value;	
+		imageLocation = value;
 		setFieldValue(value);
 	}
 }

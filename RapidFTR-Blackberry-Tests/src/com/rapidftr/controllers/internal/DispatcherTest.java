@@ -182,6 +182,28 @@ public class DispatcherTest {
         verify(flagController).flagRecord(child);
     }
 
+    @Test
+    public void shouldShowChildPhotoGalleryScreenForGivenChild() {
+        ViewChildPhotoGalleryController viewChildPhotoGalleryController = mock(ViewChildPhotoGalleryController.class);
+        ControllerFactory controllerFactory = mock(ControllerFactory.class);
+        Child child = mock(Child.class);
+
+        when(controllerFactory.viewChildPhotoGallery(anyDispatcher())).thenReturn(viewChildPhotoGalleryController);
+        new Dispatcher(controllerFactory).viewChildPhotoGallery(child);
+        verify(viewChildPhotoGalleryController).viewChildPhotoGallery(child);
+    }
+    
+    @Test
+    public void shouldShowSelectedPhotoScreenForGivenPhotoLocation() {
+        ViewSelectedPhotoController viewSelectedPhotoController = mock(ViewSelectedPhotoController.class);
+        ControllerFactory controllerFactory = mock(ControllerFactory.class);
+
+        String imageLocation = "Photo_Location";
+        when(controllerFactory.viewSelectedPhoto(anyDispatcher())).thenReturn(viewSelectedPhotoController);
+        new Dispatcher(controllerFactory).viewSelectedPhoto(imageLocation);
+        verify(viewSelectedPhotoController).viewSelectedPhoto(imageLocation);
+    }
+    
     private Dispatcher anyDispatcher() {
         return Matchers.any(Dispatcher.class);
     }

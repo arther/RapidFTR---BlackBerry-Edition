@@ -36,6 +36,12 @@ public class ViewChildController extends Controller {
 	public void viewChildPhoto(Child child) {
 		dispatcher.viewChildPhoto(child);
 	}
+	
+	//Art-Sow
+	public void viewChildPhotoGallery(Child child){
+		dispatcher.viewChildPhotoGallery(child);
+	}
+	//
 
 	public void showHistory(Child child) {
 		dispatcher.showHistory(child);

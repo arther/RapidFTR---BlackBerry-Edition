@@ -22,18 +22,18 @@ public class HomeScreen extends CustomScreen {
 	private static final XYEdges PADDING = new XYEdges(10, 10, 10, 10);
 	private Button searchButton;
 	private Settings settings;
-    private ConnectionFactory connectionFactory;
+	private ConnectionFactory connectionFactory;
 
 	public HomeScreen(Settings settings) {
 		this.settings = settings;
 		layoutScreen();
-        this.connectionFactory = new ConnectionFactory();
+		this.connectionFactory = new ConnectionFactory();
 	}
 
 	private void layoutScreen() {
-		
+
 		setUserName(this.settings.getCurrentlyLoggedIn());
-		
+
 		Button loginButton;
 		if (settings.isUserLoggedIn()) {
 			loginButton = new Button("Log Out");
@@ -71,20 +71,22 @@ public class HomeScreen extends CustomScreen {
 			}
 		});
 
-        Button synchronizeButton = new Button("Synchronize");
-        synchronizeButton.setChangeListener(new FieldChangeListener() {
-            public void fieldChanged(Field field, int context) {
-                      onSynchronizeClicked();
-            }
-        });
+		Button synchronizeButton = new Button("Synchronize");
+		synchronizeButton.setChangeListener(new FieldChangeListener() {
+			public void fieldChanged(Field field, int context) {
+				onSynchronizeClicked();
+			}
+		});
 
-        Vector buttonGroup = new Vector();
+		Vector buttonGroup = new Vector();
 		buttonGroup.addElement(loginButton);
 		buttonGroup.addElement(newChildButton);
 		buttonGroup.addElement(viewChildrenButton);
 		buttonGroup.addElement(searchButton);
 
 		buttonGroup.addElement(synchronizeButton);
+
+		// buttonGroup.addElement(galleryButton);
 
 		Button.setOptimimWidthForButtonGroup(buttonGroup);
 		VerticalFieldManager manager = new VerticalFieldManager(FIELD_HCENTER);
@@ -100,6 +102,9 @@ public class HomeScreen extends CustomScreen {
 
 		synchronizeButton.setPadding(PADDING);
 		manager.add(synchronizeButton);
+
+		// galleryButton.setPadding(PADDING);
+		// manager.add(galleryButton);
 
 		add(manager);
 
@@ -118,20 +123,20 @@ public class HomeScreen extends CustomScreen {
 		((HomeController) controller).logIn();
 	}
 
-    protected void onSynchronizeClicked() {
-        if (connectionFactory.isNotConnected()) {
-            Dialog.ask(Dialog.D_OK,
-                    "Could not establish connection with host because all connectors are offline");
-        } else if (!settings.isUserLoggedIn()) {
-            int result = Dialog.ask(Dialog.D_OK_CANCEL,
-                    "You are not logged in.\n Press ok to  login.");
-            if (result == Dialog.OK) {
-                onLoginButtonClicked();
-            }
-        } else {
-            ((HomeController) controller).synchronize();
-        }
-    }
+	protected void onSynchronizeClicked() {
+		if (connectionFactory.isNotConnected()) {
+			Dialog.ask(Dialog.D_OK,
+					"Could not establish connection with host because all connectors are offline");
+		} else if (!settings.isUserLoggedIn()) {
+			int result = Dialog.ask(Dialog.D_OK_CANCEL,
+					"You are not logged in.\n Press ok to  login.");
+			if (result == Dialog.OK) {
+				onLoginButtonClicked();
+			}
+		} else {
+			((HomeController) controller).synchronize();
+		}
+	}
 
 	private void onViewChildrenClicked() {
 		((HomeController) controller).viewChildren();
@@ -145,69 +150,68 @@ public class HomeScreen extends CustomScreen {
 		((HomeController) controller).newChild();
 	}
 
-    private void onCleanDeviceClicked() {
-        int result = Dialog
-                .ask(
-                        Dialog.D_YES_NO,
-                        "Do you want to clean the device? This will clear all the locally stored child records and login information");
-        if (result == Dialog.YES) {
-            ((HomeController) controller).cleanAll();
-            Dialog.alert("Device successfully cleaned");
-            onLoginButtonClicked();
-        }
-    }
+	private void onCleanDeviceClicked() {
+		int result = Dialog
+				.ask(Dialog.D_YES_NO,
+						"Do you want to clean the device? This will clear all the locally stored child records and login information");
+		if (result == Dialog.YES) {
+			((HomeController) controller).cleanAll();
+			Dialog.alert("Device successfully cleaned");
+			onLoginButtonClicked();
+		}
+	}
 
-    protected void makeMenu(Menu menu, int instance) {
-        int userOptions = 1;
-        int firstSeparator = 2;
-        int advancedOptions = 3;
-        MenuItem cleanDeviceMenuItem = new MenuItem("Clean Device", advancedOptions, 2) {
-            public void run() {
-                onCleanDeviceClicked();
-            }
-        };
-        MenuItem syncInfoItem = new MenuItem("Last Sync Info", userOptions, 2) {
-            public void run() {
-                Dialog.alert(settings.getLastSyncInfo());
-            }
-        };
-        MenuItem contactHelpItem = new MenuItem("Contact & Help", userOptions, 1) {
-            public void run() {
-                ((HomeController) controller).showcontact();
-            }
-        };
-        MenuItem updateApplicationMenuItem = new MenuItem("Update RapidFTR", advancedOptions, 1) {
-            public void run() {
-                ((HomeController) controller).updateApplication();
-            }
-        };
+	protected void makeMenu(Menu menu, int instance) {
+		int userOptions = 1;
+		int firstSeparator = 2;
+		int advancedOptions = 3;
+		MenuItem cleanDeviceMenuItem = new MenuItem("Clean Device",
+				advancedOptions, 2) {
+			public void run() {
+				onCleanDeviceClicked();
+			}
+		};
+		MenuItem syncInfoItem = new MenuItem("Last Sync Info", userOptions, 2) {
+			public void run() {
+				Dialog.alert(settings.getLastSyncInfo());
+			}
+		};
+		MenuItem contactHelpItem = new MenuItem("Contact & Help", userOptions,
+				1) {
+			public void run() {
+				((HomeController) controller).showcontact();
+			}
+		};
+		MenuItem updateApplicationMenuItem = new MenuItem("Update RapidFTR",
+				advancedOptions, 1) {
+			public void run() {
+				((HomeController) controller).updateApplication();
+			}
+		};
 
-
-        menu.add(contactHelpItem);
-        menu.add(updateApplicationMenuItem);
-        menu.add(MenuItem.separator(firstSeparator));
-        menu.add(cleanDeviceMenuItem);
-        menu.add(syncInfoItem);
-    }
+		menu.add(contactHelpItem);
+		menu.add(updateApplicationMenuItem);
+		menu.add(MenuItem.separator(firstSeparator));
+		menu.add(cleanDeviceMenuItem);
+		menu.add(syncInfoItem);
+	}
 
 	protected void onExposed() {
 		clearFields();
 		layoutScreen();
 		super.onExposed();
-        if (!((Main)this.getApplication()).permissionsGranted) {
-            onClose();
-            System.exit(-1);
-        }
+		if (!((Main) this.getApplication()).permissionsGranted) {
+			onClose();
+			System.exit(-1);
+		}
 	}
-	
-	public boolean keyChar( char key, int status, int time ) 
-    {
+
+	public boolean keyChar(char key, int status, int time) {
 		return false;
-    }
-    
-    public boolean keyDown(int keycode, int time) 
-    {
+	}
+
+	public boolean keyDown(int keycode, int time) {
 		return false;
-    }
+	}
 
 }
