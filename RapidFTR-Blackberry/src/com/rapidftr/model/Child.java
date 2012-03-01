@@ -188,19 +188,6 @@ public class Child implements Persistable {
 		setField(Child.LAST_UPDATED_KEY, updatedDate);
 	}
 
-	// Art
-	public void setPrimaryPhoto(String imagePath, String updatedDate) {
-		addImageToChild(getField("current_photo_key"), updatedDate);
-		setField("current_photo_key", imagePath);
-		changedFields.put("current_photo_key", imagePath);
-		if (isUpdated()) {
-			childStatus = ChildStatus.UPDATED;
-		}
-		setField(Child.LAST_UPDATED_KEY, updatedDate);
-	}
-
-	//
-
 	public ChildHistories getHistory() {
 		return new ChildHistories(getField("histories"));
 	}
@@ -392,31 +379,12 @@ public class Child implements Persistable {
 		return strArray;
 	}
 
-	public void addImageToChild(String imageLocation, String updatedDate) {
-		if (imageLocation == null || imageLocation == "") {
-			return;
-		}
-		String imageLocations = getField("photo_keys");
-
-		imageLocation = imageLocation.replace('.', '/');
-		String[] tempImageLocations = split(imageLocation, "/");
-		imageLocation = tempImageLocations[tempImageLocations.length - 2];
-		if (imageLocations != null && !"".equals(imageLocations)) {
-			if (imageLocations.indexOf(imageLocation) == -1) {
-				imageLocations = imageLocations.replace(']', ' ');
-				imageLocations = imageLocations.trim();
-				imageLocations += ",\"" + imageLocation + "\"]";
-				setField("photo_keys", imageLocations);
-			}
-		} else {
-			setField("photo_keys", "[\"" + imageLocation + "\"]");
-		}
-
-		changedFields.put("photo_keys", imageLocation);
-		if (isUpdated()) {
-			if (childStatus != ChildStatus.NEW)
-				childStatus = ChildStatus.UPDATED;
-		}
-		setField(Child.LAST_UPDATED_KEY, updatedDate);
+	public String getPrimaryImageName() {
+		String primaryImageLocation = getField("current_photo_key");
+		String[] toSplitImageNameFromLocation;
+		primaryImageLocation = primaryImageLocation.replace('.', '/');
+		toSplitImageNameFromLocation = split(primaryImageLocation, "/");
+		return toSplitImageNameFromLocation[toSplitImageNameFromLocation.length - 2];
 	}
+
 }

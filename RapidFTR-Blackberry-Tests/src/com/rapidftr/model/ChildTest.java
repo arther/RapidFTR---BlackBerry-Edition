@@ -185,30 +185,4 @@ public class ChildTest {
 		assertTrue(child.getImageLocations()[1].equals("photo2"));
 	}
 
-	@Test
-	public void shouldAddImageToChild() {
-		Child child = ChildFactory.newChild();
-		String imageLocation1 = "file/extra_image_1.jpg";
-		String imageLocation2 = "file/extra_image_2.jpg";
-		String imageAddedDate = "24.02.2012";
-		assertNull(child.getField("photo_keys"));
-		child.addImageToChild(imageLocation1, imageAddedDate);
-		assertTrue(child.getImageLocations()[0].equals("extra_image_1"));
-		child.addImageToChild(imageLocation2, imageAddedDate);
-		assertTrue(child.getImageLocations()[1].equals("extra_image_2"));
-	}
-
-	@Test
-	public void shouldSetPrimaryPhoto() {
-		Child child = ChildFactory.newChild();
-		String imageLocation = "primary_image";
-		child.setField("current_photo_key", imageLocation);
-		assertTrue(child.getField("current_photo_key").equals(imageLocation));
-		String modifiedImageLocation = "modified_primary_image";
-		String modifiedDate = "27.02.2012";
-		child.setPrimaryPhoto(modifiedImageLocation, modifiedDate);
-		assertTrue(child.getField("current_photo_key").equals(
-				modifiedImageLocation));
-	}
-	
 }

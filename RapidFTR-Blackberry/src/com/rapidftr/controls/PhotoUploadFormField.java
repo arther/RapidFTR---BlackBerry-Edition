@@ -1,7 +1,5 @@
 package com.rapidftr.controls;
 
-import java.util.Calendar;
-
 import net.rim.device.api.math.Fixed32;
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.EncodedImage;
@@ -12,8 +10,6 @@ import net.rim.device.api.ui.component.LabelField;
 import com.rapidftr.form.FormField;
 import com.rapidftr.model.Child;
 import com.rapidftr.screens.ManageChildScreen;
-import com.rapidftr.utilities.DateFormatter;
-import com.rapidftr.utilities.DefaultBlackBerryDateFormat;
 import com.rapidftr.utilities.ImageCaptureListener;
 import com.rapidftr.utilities.ImageHelper;
 import com.rapidftr.utilities.ImageUtility;
@@ -37,7 +33,6 @@ public class PhotoUploadFormField extends CustomField implements
 		});
 		add(new LabelField(field.getDisplayName()));
 		add(capturePhoto);
-
 	}
 
 	public void onImagedSaved(String imagePath, EncodedImage encodedImage) {
@@ -47,20 +42,7 @@ public class PhotoUploadFormField extends CustomField implements
 		bitmap = ImageUtility.scaleImage(encodedImage, requiredWidth,
 				requiredHeight);
 		capturePhoto.setBitmap(bitmap);
-//		Child curChild = getChildScreen().getChild();
 		setFieldValue(this.imageLocation);
-		// if (curChild != null) {
-		// // if (curChild.getField("current_photo_key") != null
-		// // || getChildScreen().getChild()
-		// // .getField("current_photo_key") != "") {
-		//
-		// // }
-		// getChildScreen().getChild().addImageToChild(
-		// imagePath,
-		// new DateFormatter(Calendar.getInstance().getTimeZone(),
-		// new DefaultBlackBerryDateFormat())
-		// .getCurrentFormattedDateTime());
-		// }
 	}
 
 	protected void onDisplay() {

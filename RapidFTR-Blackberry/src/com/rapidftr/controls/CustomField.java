@@ -22,8 +22,6 @@ public abstract class CustomField extends VerticalFieldManager {
 	}
 
 	protected void setFieldValue(String value) {
-		if (field.getValue() == "") {
-			field.setValue(value);
-		}
+		field.setValue(value);
 	}
 }
